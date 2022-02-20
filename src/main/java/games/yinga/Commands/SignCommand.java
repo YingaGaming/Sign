@@ -53,7 +53,7 @@ public class SignCommand implements CommandExecutor {
         List<String> loreList = Sign.config.getStringList("lore");
         ArrayList<String> parsedList = new ArrayList<String>();
 
-        String date = (new SimpleDateFormat("dd.MM.yyyy hh:mm:ss")).format(new Date());
+        String date = (new SimpleDateFormat(Sign.config.getString("date-format"))).format(new Date());
 
         String note = ChatColor.translateAlternateColorCodes('&', String.join(" ", args));
 

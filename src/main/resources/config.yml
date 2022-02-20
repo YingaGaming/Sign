@@ -1,16 +1,28 @@
+# This is the lore that will be given to signed items. The note is added below it.
+#
+# %PLAYER%  | Player displayname
+# %DATE%    | Date and time
 lore:
   - "Signed by %PLAYER%"
   - "%DATE%"
   - ""
 
+# Format of the date
+#
+# European: dd.MM.yyyy hh:mm:ss
+date-format: "MM/dd/yyyy hh:mm:ss"
+
+# List of items that can be used even when they're signed
 use-whitelist: 
   - BOW
   - SHIELD
   - CROSSBOW
 
+# Limits for the note
 note-chars-per-line: 32
 note-max-lines: 3
 
+# Change what arrives in chat!
 messages:
   sign-success: "&aThe item has been signed!"
   note-too-long: "&cThe message is too long!"
