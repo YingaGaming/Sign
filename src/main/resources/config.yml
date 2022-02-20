@@ -1,0 +1,17 @@
+lore:
+  - "Signiert von %PLAYER%"
+  - "%DATE%"
+  - ""
+
+use-whitelist: 
+  - BOW
+  - SHIELD
+  - CROSSBOW
+
+note-chars-per-line: 32
+note-max-lines: 3
+
+messages:
+  sign-success: "&aThe item has been signed!"
+  note-too-long: "&cThe message is too long!"
+  use-disabled: "&cSigned items cannot be used!"

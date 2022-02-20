@@ -1,0 +1,11 @@
+main: games.yinga.Sign
+name: Sign
+author: Xenorio
+version: 1.0
+api-version: 1.18
+
+commands:
+  sign:
+    description: 'Signs an item'
+    usage: 'sign'
+    permission: 'sign.create'
