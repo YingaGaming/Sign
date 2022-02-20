@@ -7,5 +7,5 @@ api-version: 1.18
 commands:
   sign:
     description: 'Signs an item'
-    usage: 'sign'
+    usage: 'sign [note]'
     permission: 'sign.create'
