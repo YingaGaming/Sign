@@ -34,6 +34,10 @@ public class UseListener implements Listener {
     @EventHandler()
     public void onUse(PlayerInteractEvent event) {
 
+        if (event.getPlayer().hasPermission("sign.use.bypass")) {
+            return;
+        }
+
         if (event.getItem() == null) {
             return;
         }

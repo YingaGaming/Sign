@@ -46,7 +46,7 @@ public class SignCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!player.hasPermission("sign.use")) {
+        if (!player.hasPermission("sign.create")) {
             player.sendMessage(
                     ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.no-permission")));
             return true;
