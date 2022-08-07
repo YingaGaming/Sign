@@ -46,6 +46,18 @@ public class SignCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
+        if (!player.hasPermission("sign.use")) {
+            player.sendMessage(
+                    ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.no-permission")));
+            return true;
+        }
+
+        if (player.getInventory().getItemInMainHand() == null) {
+            player.sendMessage(
+                    ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.no-item")));
+            return true;
+        }
+
         ItemStack item = player.getInventory().getItemInMainHand();
 
         ItemMeta meta = item.getItemMeta();
@@ -79,7 +91,9 @@ public class SignCommand implements CommandExecutor {
             parsedList.add(line);
         });
 
-        meta.setLore(parsedList);
+        if (player.hasPermission("sign.note")) {
+            meta.setLore(parsedList);   
+        }
 
         meta.getPersistentDataContainer().set(new NamespacedKey(Sign.getInstance(), "signed"), PersistentDataType.STRING, player.getUniqueId().toString());
 

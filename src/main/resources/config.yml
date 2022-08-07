@@ -27,3 +27,5 @@ messages:
   sign-success: "&aThe item has been signed!"
   note-too-long: "&cThe message is too long!"
   use-disabled: "&cSigned items cannot be used!"
+  no-item: "&cYou are not holding an item!"
+  no-permission: "&cYou are not permitted to do this!"
