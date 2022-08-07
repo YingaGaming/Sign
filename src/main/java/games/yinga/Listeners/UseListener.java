@@ -33,6 +33,10 @@ public class UseListener implements Listener {
 
     @EventHandler()
     public void onUse(PlayerInteractEvent event) {
+
+        if (event.getItem() == null) {
+            return;
+        }
         
         if (!event.getAction().equals(Action.RIGHT_CLICK_BLOCK) && !event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             return;
