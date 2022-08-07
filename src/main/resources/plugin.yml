@@ -1,7 +1,7 @@
 main: games.yinga.Sign
 name: Sign
 author: Xenorio
-version: 1.0.0
+version: 1.0.1
 api-version: 1.18
 
 commands:
