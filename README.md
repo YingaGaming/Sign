@@ -11,9 +11,9 @@ This will attach customizable lore to the item, and an optional note.
 Signed items cannot be used normally, unless explicitly allowed in config.
 
 ## Permissions
-sign.create - Sign an item
-sign.note - Attach a note
-sign.use.bypass - Use all signed items
+- sign.create | Sign an item
+- sign.note | Attach a note
+- sign.use.bypass | Use all signed items
 
 ## Building
 To build this plugin yourself, simply run ``mvn package``
