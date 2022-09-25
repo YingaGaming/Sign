@@ -52,6 +52,12 @@ public class SignCommand implements CommandExecutor {
             return true;
         }
 
+        if (args.length > 0 && !player.hasPermission("sign.note")) {
+            player.sendMessage(
+                    ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.no-permission")));
+            return true;
+        }
+
         if (player.getInventory().getItemInMainHand() == null) {
             player.sendMessage(
                     ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.no-item")));
@@ -88,12 +94,12 @@ public class SignCommand implements CommandExecutor {
         });
         
         splitNote.forEach(line -> {
-            parsedList.add(line);
+            if (!line.equals("") && !line.equals(" ")) {
+                parsedList.add(line);
+            }
         });
-
-        if (player.hasPermission("sign.note")) {
-            meta.setLore(parsedList);   
-        }
+        
+        meta.setLore(parsedList);   
 
         meta.getPersistentDataContainer().set(new NamespacedKey(Sign.getInstance(), "signed"), PersistentDataType.STRING, player.getUniqueId().toString());
 
