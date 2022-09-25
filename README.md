@@ -14,6 +14,7 @@ Signed items cannot be used normally, unless explicitly allowed in config.
 - sign.create | Sign an item
 - sign.note | Attach a note
 - sign.use.bypass | Use all signed items
+- sign.overwrite | Overwrite signed items
 
 ## Building
 To build this plugin yourself, simply run ``mvn package``

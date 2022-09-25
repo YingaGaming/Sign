@@ -68,6 +68,13 @@ public class SignCommand implements CommandExecutor {
 
         ItemMeta meta = item.getItemMeta();
 
+        if (meta.getPersistentDataContainer().get(new NamespacedKey(Sign.getInstance(), "signed"),
+                PersistentDataType.STRING) != null && !player.hasPermission("sign.overwrite")) {
+            player.sendMessage(
+                    ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.no-overwrite")));
+            return true;
+        }
+
         List<String> loreList = Sign.config.getStringList("lore");
         ArrayList<String> parsedList = new ArrayList<String>();
 
