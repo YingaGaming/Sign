@@ -13,6 +13,7 @@ Signed items cannot be used normally, unless explicitly allowed in config.
 ## Permissions
 - sign.create | Sign an item
 - sign.note | Attach a note
+- sign.note.format | Use format codes in note
 - sign.use.bypass | Use all signed items
 - sign.overwrite | Overwrite signed items
 
