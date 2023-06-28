@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
@@ -34,8 +35,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import games.yinga.Sign;
+import me.clip.placeholderapi.PlaceholderAPI;
 
 public class SignCommand implements CommandExecutor {
+
+    private Player player;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -44,7 +48,7 @@ public class SignCommand implements CommandExecutor {
             return false;
         }
 
-        Player player = (Player) sender;
+        player = (Player) sender;
 
         // sign.create permission
         if (!player.hasPermission("sign.create")) {
@@ -82,8 +86,6 @@ public class SignCommand implements CommandExecutor {
         List<String> loreList = Sign.config.getStringList("lore");
         ArrayList<String> parsedList = new ArrayList<String>();
 
-        String date = (new SimpleDateFormat(Sign.config.getString("date-format"))).format(new Date());
-
         String note = String.join(" ", args);
 
         // only apply color codes if player has permission
@@ -105,20 +107,16 @@ public class SignCommand implements CommandExecutor {
         // add lore to output list, and replace variables
         loreList.forEach(line -> {
             parsedList.add(
-                    ChatColor.translateAlternateColorCodes('&',
-                            line
-                                    .replaceAll("%PLAYER%", player.getDisplayName())
-                                    .replaceAll("%DATE%", date)));
-        });
+                        ChatColor.translateAlternateColorCodes('&',
+                                parseVars(line)));
+            });
 
         // if there is a note, apply note prefix
         if (args.length > 0) {
             Sign.config.getStringList("note-prefix").forEach(line -> {
                 parsedList.add(
                         ChatColor.translateAlternateColorCodes('&',
-                                line
-                                        .replaceAll("%PLAYER%", player.getDisplayName())
-                                        .replaceAll("%DATE%", date)));
+                                parseVars(line)));
             });
         }
 
@@ -134,9 +132,7 @@ public class SignCommand implements CommandExecutor {
             Sign.config.getStringList("note-suffix").forEach(line -> {
                 parsedList.add(
                         ChatColor.translateAlternateColorCodes('&',
-                                line
-                                        .replaceAll("%PLAYER%", player.getDisplayName())
-                                        .replaceAll("%DATE%", date)));
+                                parseVars(line)));
             });
         }
 
@@ -151,6 +147,19 @@ public class SignCommand implements CommandExecutor {
 
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.sign-success")));
         return true;
+    }
+
+    private String parseVars(String line) {
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) { // check if PlaceholderAPI exists
+            line = PlaceholderAPI.setPlaceholders(player, line); // apply PAPI placeholders
+        }
+
+        // apply native placeholders
+        String date = (new SimpleDateFormat(Sign.config.getString("date-format"))).format(new Date());
+        line = line.replaceAll("%PLAYER%", player.getDisplayName()).replaceAll("%DATE%", date);
+
+        return line;
     }
 
 }

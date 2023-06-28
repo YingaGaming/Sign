@@ -40,6 +40,9 @@ public class Sign extends JavaPlugin {
 
         Sign.config = this.getConfig();
 
+        Sign.config.options().copyDefaults(true);
+        saveConfig();
+
         this.getCommand("sign").setExecutor(new SignCommand());
         this.getServer().getPluginManager().registerEvents(new UseListener(), this);
 

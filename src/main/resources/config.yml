@@ -38,6 +38,3 @@ messages:
   no-item: "&cYou are not holding an item!"
   no-permission: "&cYou are not permitted to do this!"
   no-overwrite: "&cYou are not allowed to overwrite signed items!"
-
-# NO TOUCHY!!!
-version: 2
