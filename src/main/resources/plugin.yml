@@ -1,7 +1,7 @@
 main: games.yinga.Sign
 name: Sign
 author: Xenorio
-version: 1.0.2
+version: 1.1.0
 api-version: 1.18
 
 softdepend: [PlaceholderAPI]
