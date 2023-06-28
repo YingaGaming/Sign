@@ -39,25 +39,28 @@ public class SignCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        
+
         if (!(sender instanceof Player)) {
             return false;
         }
 
         Player player = (Player) sender;
 
+        // sign.create permission
         if (!player.hasPermission("sign.create")) {
             player.sendMessage(
                     ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.no-permission")));
             return true;
         }
 
+        // sign.note permission
         if (args.length > 0 && !player.hasPermission("sign.note")) {
             player.sendMessage(
                     ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.no-permission")));
             return true;
         }
 
+        // check if item in main hand
         if (player.getInventory().getItemInMainHand() == null) {
             player.sendMessage(
                     ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.no-item")));
@@ -68,6 +71,7 @@ public class SignCommand implements CommandExecutor {
 
         ItemMeta meta = item.getItemMeta();
 
+        // check if item is already signed
         if (meta.getPersistentDataContainer().get(new NamespacedKey(Sign.getInstance(), "signed"),
                 PersistentDataType.STRING) != null && !player.hasPermission("sign.overwrite")) {
             player.sendMessage(
@@ -80,40 +84,73 @@ public class SignCommand implements CommandExecutor {
 
         String date = (new SimpleDateFormat(Sign.config.getString("date-format"))).format(new Date());
 
-        String note = ChatColor.translateAlternateColorCodes('&', String.join(" ", args));
+        String note = String.join(" ", args);
 
-        List<String> splitNote = Arrays.asList(note.split("(?<=\\G.{" + Sign.config.getString("note-chars-per-line") + "})"));
+        // only apply color codes if player has permission
+        if (player.hasPermission("sign.note.format")) {
+            note = ChatColor.translateAlternateColorCodes('&', note);
+        }
 
+        // split note into lines
+        List<String> splitNote = Arrays
+                .asList(note.split("(?<=\\G.{" + Sign.config.getString("note-chars-per-line") + "})"));
+
+        // check if note is too long
         if (splitNote.size() > Sign.config.getInt("note-max-lines")) {
             player.sendMessage(
                     ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.note-too-long")));
             return true;
         }
 
+        // add lore to output list, and replace variables
         loreList.forEach(line -> {
             parsedList.add(
-                ChatColor.translateAlternateColorCodes('&', 
-                    line
-                        .replaceAll("%PLAYER%", player.getDisplayName())
-                        .replaceAll("%DATE%", date)
-                )
-            );
+                    ChatColor.translateAlternateColorCodes('&',
+                            line
+                                    .replaceAll("%PLAYER%", player.getDisplayName())
+                                    .replaceAll("%DATE%", date)));
         });
-        
+
+        // if there is a note, apply note prefix
+        if (args.length > 0) {
+            Sign.config.getStringList("note-prefix").forEach(line -> {
+                parsedList.add(
+                        ChatColor.translateAlternateColorCodes('&',
+                                line
+                                        .replaceAll("%PLAYER%", player.getDisplayName())
+                                        .replaceAll("%DATE%", date)));
+            });
+        }
+
+        // add note to output list
         splitNote.forEach(line -> {
             if (!line.equals("") && !line.equals(" ")) {
                 parsedList.add(line);
             }
         });
-        
-        meta.setLore(parsedList);   
 
-        meta.getPersistentDataContainer().set(new NamespacedKey(Sign.getInstance(), "signed"), PersistentDataType.STRING, player.getUniqueId().toString());
+        // if there is a note, apply note suffix
+        if (args.length > 0) {
+            Sign.config.getStringList("note-suffix").forEach(line -> {
+                parsedList.add(
+                        ChatColor.translateAlternateColorCodes('&',
+                                line
+                                        .replaceAll("%PLAYER%", player.getDisplayName())
+                                        .replaceAll("%DATE%", date)));
+            });
+        }
+
+        // add output list to item
+        meta.setLore(parsedList);
+
+        // mark item as signed, using player UUID
+        meta.getPersistentDataContainer().set(new NamespacedKey(Sign.getInstance(), "signed"),
+                PersistentDataType.STRING, player.getUniqueId().toString());
 
         item.setItemMeta(meta);
 
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', Sign.config.getString("messages.sign-success")));
         return true;
     }
-    
+
 }

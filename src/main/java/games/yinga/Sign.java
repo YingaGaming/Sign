@@ -25,8 +25,10 @@ import games.yinga.Listeners.UseListener;
 
 public class Sign extends JavaPlugin {
 
+    public static final int CURRENT_CONFIG_VERSION = 2;
+
     public static FileConfiguration config;
-    
+
     private static Sign instance;
 
     @Override
@@ -43,8 +45,8 @@ public class Sign extends JavaPlugin {
 
     }
 
-    public static Sign getInstance(){
+    public static Sign getInstance() {
         return instance;
     }
-    
+
 }

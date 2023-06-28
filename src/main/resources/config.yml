@@ -1,4 +1,4 @@
-# This is the lore that will be given to signed items. The note is added below it.
+# This is the lore that will be given to signed items.
 #
 # %PLAYER%  | Player displayname
 # %DATE%    | Date and time
@@ -6,6 +6,14 @@ lore:
   - "Signed by %PLAYER%"
   - "%DATE%"
   - ""
+
+# Added above the note, only if a note exists
+note-prefix:
+  - "- Note -"
+
+# Added below the note, only if a note exists
+note-suffix:
+  - "- End of Note -"
 
 # Format of the date
 #
@@ -30,3 +38,6 @@ messages:
   no-item: "&cYou are not holding an item!"
   no-permission: "&cYou are not permitted to do this!"
   no-overwrite: "&cYou are not allowed to overwrite signed items!"
+
+# NO TOUCHY!!!
+version: 2
