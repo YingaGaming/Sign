@@ -1,21 +1,33 @@
-# This is the lore that will be given to signed items.
+# The lore that will be added to signed items
 #
 # %PLAYER%  | Player displayname
 # %DATE%    | Date and time
+#
+# PlaceholderAPI is supported!
 lore:
   - "Signed by %PLAYER%"
   - "%DATE%"
   - ""
 
 # Added above the note, only if a note exists
+#
+# %PLAYER%  | Player displayname
+# %DATE%    | Date and time
+#
+# PlaceholderAPI is supported!
 note-prefix:
   - "- Note -"
 
 # Added below the note, only if a note exists
+#
+# %PLAYER%  | Player displayname
+# %DATE%    | Date and time
+#
+# PlaceholderAPI is supported!
 note-suffix:
   - "- End of Note -"
 
-# Format of the date
+# Format of the date variable
 #
 # European: dd.MM.yyyy hh:mm:ss
 date-format: "MM/dd/yyyy hh:mm:ss"
